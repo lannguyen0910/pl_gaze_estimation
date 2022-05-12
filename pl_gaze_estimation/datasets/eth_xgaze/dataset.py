@@ -9,7 +9,6 @@ import torch.utils.data
 from omegaconf import DictConfig
 
 from ...pl_utils.dataset import Dataset as PlDataset
-from ...utils import str2path
 from .transforms import create_transform
 
 
@@ -50,7 +49,7 @@ class Dataset(PlDataset):
         super().__init__(config)
 
     def setup(self, stage: Optional[str] = None) -> None:
-        dataset_root_dir = str2path(self.config.DATASET.DATASET_ROOT_DIR)
+        dataset_root_dir = self.config.DATASET.DATASET_ROOT_DIR
         assert dataset_root_dir.exists()
 
         split_file = dataset_root_dir / 'train_test_split.json'

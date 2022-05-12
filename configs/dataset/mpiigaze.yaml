@@ -1,6 +1,6 @@
 DATASET:
   NAME: MPIIGaze
-  DATASET_PATH: ~/datasets/MPIIGaze.h5
+  DATASET_PATH: datasets/MPIIGaze.h5
 EXPERIMENT:
   TEST_ID: 0
 VAL:

@@ -10,7 +10,7 @@ DEVICE:
     DETERMINISTIC: false
 EXPERIMENT:
   SEED: 0
-  ROOT_DIR : experiments/mpiigaze
+  ROOT_DIR: experiments/mpiigaze
   OUTPUT_DIR: null
   RESUME: null
   VAL_PERIOD: 1
@@ -38,7 +38,7 @@ LOG:
   LOG_ETA: true
   LOG_PERIOD: 100
   CHECKPOINT:
-    FILENAME: '{epoch:04d}'
+    FILENAME: "{epoch:04d}"
     PERIOD: 1
     TOP_K: -1
     SAVE_LAST: false
@@ -68,7 +68,7 @@ DEBUG:
   WEIGHT_SUMMARY: top
 DATASET:
   NAME: MPIIGaze
-  DATASET_PATH: ~/datasets/MPIIGaze.h5
+  DATASET_PATH: datasets/MPIIGaze.h5
 MODEL:
   TYPE: mpiigaze
   NAME: resnet_preact

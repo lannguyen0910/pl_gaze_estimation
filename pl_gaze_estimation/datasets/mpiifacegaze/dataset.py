@@ -8,7 +8,6 @@ import torch.utils.data
 from omegaconf import DictConfig
 
 from ...pl_utils.dataset import Dataset as PlDataset
-from ...utils import str2path
 from .transforms import create_transform
 
 
@@ -45,8 +44,7 @@ class Dataset(PlDataset):
         super().__init__(config)
 
     def setup(self, stage: Optional[str] = None) -> None:
-        dataset_path = str2path(self.config.DATASET.DATASET_PATH)
-        assert dataset_path.exists()
+        dataset_path = self.config.DATASET.DATASET_PATH
 
         assert self.config.EXPERIMENT.TEST_ID in range(-1, 15)
         person_ids = [f'p{index:02}' for index in range(15)]
