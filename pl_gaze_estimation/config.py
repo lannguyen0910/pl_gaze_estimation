@@ -1,7 +1,7 @@
 import argparse
 import logging
 import pathlib
-from typing import Union
+from typing import Union, List
 
 from omegaconf import DictConfig, OmegaConf
 
@@ -33,11 +33,11 @@ def parse_args():
     return config
 
 
-def load_configs(paths: list[Union[str, pathlib.Path]]) -> DictConfig:
+def load_configs(paths: List[Union[str, pathlib.Path]]) -> DictConfig:
     return OmegaConf.merge(*[OmegaConf.load(path) for path in paths])
 
 
-def options_to_config(options: list[str],
+def options_to_config(options: List[str],
                       without_equal_sign: bool) -> DictConfig:
     if not options:
         return OmegaConf.create()
@@ -48,7 +48,7 @@ def options_to_config(options: list[str],
     return OmegaConf.from_cli(options)
 
 
-def get_flatten_keys(config: dict) -> list[str]:
+def get_flatten_keys(config: dict) -> List[str]:
     res = []
     for key, val in config.items():
         if not isinstance(val, dict):

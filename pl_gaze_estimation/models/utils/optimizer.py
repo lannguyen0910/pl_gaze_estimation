@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List, Dict
 
 import torch
 import torch.nn as nn
@@ -7,7 +7,7 @@ from pytorch_warmup_scheduler import WarmupScheduler
 
 
 def get_param_list(config: DictConfig, model: nn.Module,
-                   weight_decay: float) -> list[dict[str, Any]]:
+                   weight_decay: float) -> List[Dict[str, Any]]:
     param_list = []
     for module in model.modules():
         if not hasattr(module, 'weight'):

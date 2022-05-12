@@ -1,5 +1,5 @@
 import time
-from typing import Union
+from typing import Union, Dict
 
 import pytorch_lightning as pl
 import torch
@@ -96,7 +96,7 @@ class Model(pl.LightningModule):
                             optimizer: Optimizer, optimizer_idx: int) -> None:
         optimizer.zero_grad(set_to_none=True)
 
-    def get_metrics(self) -> dict[str, Union[int, str]]:
+    def get_metrics(self) -> Dict[str, Union[int, str]]:
         items = super().get_metrics()
         items.pop('v_num', None)
         return items

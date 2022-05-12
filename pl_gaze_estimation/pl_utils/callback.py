@@ -1,6 +1,6 @@
 import pathlib
 import time
-from typing import Any, Optional
+from typing import Any, Optional, List
 
 import pytorch_lightning as pl
 import torch
@@ -11,7 +11,7 @@ from pytorch_lightning.utilities.types import STEP_OUTPUT
 
 
 def get_callbacks(config: DictConfig,
-                  output_dir: pathlib.Path) -> list[Callback]:
+                  output_dir: pathlib.Path) -> List[Callback]:
     callbacks = [
         pl.callbacks.ModelCheckpoint(
             dirpath=output_dir,

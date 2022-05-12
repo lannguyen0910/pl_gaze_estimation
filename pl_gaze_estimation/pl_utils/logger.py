@@ -1,7 +1,7 @@
 import argparse
 import datetime
 import pathlib
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, List, Dict, Tuple
 
 import termcolor
 import torch
@@ -15,7 +15,7 @@ from pytorch_lightning.utilities.distributed import rank_zero_only
 
 def get_loggers(
         config: DictConfig,
-        exp_root_dir: Union[str, pathlib.Path]) -> list[LightningLoggerBase]:
+        exp_root_dir: Union[str, pathlib.Path]) -> List[LightningLoggerBase]:
     loggers = []
     if config.LOG.USE_CSV_LOGGER:
         time_str = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
@@ -65,13 +65,13 @@ class ExperimentWriter:
     def __init__(self, config: DictConfig):
         self.config = config
 
-    def log_hparams(self, params: dict[str, Any]) -> None:
+    def log_hparams(self, params: Dict[str, Any]) -> None:
         if self.config.LOG.CONSOLE.SHOW_CONFIG and params:
             print(OmegaConf.to_yaml(DictConfig(params)))
 
     def _preprocess_dict(
-        self, metrics_dict: dict[str, float]
-    ) -> tuple[bool, bool, dict[str, float], dict[str, float]]:
+        self, metrics_dict: Dict[str, float]
+    ) -> Tuple[bool, bool, Dict[str, float], Dict[str, float]]:
         time_dict = dict()
         new_metrics_dict = dict()
         is_epoch = False
@@ -109,7 +109,7 @@ class ExperimentWriter:
             res += f'/{total}'
         return res
 
-    def _create_time_label(self, time_dict: dict[str, Union[float, int]],
+    def _create_time_label(self, time_dict: Dict[str, Union[float, int]],
                            is_train: bool) -> str:
         label_color = self.config.LOG.CONSOLE.TRAIN_KEY_COLOR if is_train else self.config.LOG.CONSOLE.VAL_KEY_COLOR
         res = [
@@ -138,7 +138,7 @@ class ExperimentWriter:
                     res.append(self._to_str(key, time_str, label_color))
         return ', '.join(res)
 
-    def _create_metrics_label(self, metrics_dict: dict[str, float],
+    def _create_metrics_label(self, metrics_dict: Dict[str, float],
                               is_epoch: bool, is_train: bool) -> str:
         label_color = self.config.LOG.CONSOLE.TRAIN_KEY_COLOR if is_train else self.config.LOG.CONSOLE.VAL_KEY_COLOR
         res = []
@@ -151,7 +151,7 @@ class ExperimentWriter:
         return stage_label + ', '.join(res)
 
     def log_metrics(self,
-                    metrics_dict: dict[str, float],
+                    metrics_dict: Dict[str, float],
                     step: Optional[int] = None) -> None:
         is_epoch, is_train, metrics_dict, time_dict = self._preprocess_dict(
             metrics_dict)
@@ -181,13 +181,13 @@ class ConsoleLogger(LightningLoggerBase):
 
     @rank_zero_only
     def log_hyperparams(
-            self, params: Union[dict[str, Any], argparse.Namespace]) -> None:
+            self, params: Union[Dict[str, Any], argparse.Namespace]) -> None:
         params = self._convert_params(params)
         self.experiment.log_hparams(params)
 
     @rank_zero_only
     def log_metrics(self,
-                    metrics: dict[str, float],
+                    metrics: Dict[str, float],
                     step: Optional[int] = None) -> None:
         self.experiment.log_metrics(metrics, step)
 
