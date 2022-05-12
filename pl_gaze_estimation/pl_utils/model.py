@@ -70,8 +70,10 @@ class Model(pl.LightningModule):
         for key in keys:
             res[key] = sync_ddp_if_available(res[key], reduce_op=ReduceOp.SUM)
             res[key] /= total
+            
+        dict_total = {'total': total}
 
-        return res | {'total': total}
+        return {**res, **dict_total}
 
     def on_validation_epoch_end(self) -> None:
         elapsed = time.time() - self._val_start_time

@@ -81,9 +81,11 @@ class Model(PlModel):
 
     def validation_step(self, batch, batch_index):
         res = self._evaluate(batch)
-        return res | {
+        other_res = {
             'size': torch.tensor(len(batch[0]), device=res['loss'].device)
         }
+        return {**res, **other_res}
+
 
     def validation_epoch_end(self, outputs) -> None:
         res = self._accumulate_data(outputs)
