@@ -26,12 +26,12 @@ class Model(pl.LightningModule):
         checkpoint['train_time'] = self._train_time
         checkpoint['val_time'] = self._val_time
 
-    def on_train_start(self) -> None:
-        if isinstance(self.logger, list):
-            for logger in self.logger:
-                logger.log_hyperparams(self.config)
-        else:
-            self.logger.log_hyperparams(self.config)
+    # def on_train_start(self) -> None:
+    #     if isinstance(self.logger, list):
+    #         for logger in self.logger:
+    #             logger.log_hyperparams(self.config)
+    #     else:
+    #         self.logger.log_hyperparams(self.config)
 
     def on_train_epoch_start(self) -> None:
         self._train_start_time = time.time()
@@ -70,7 +70,7 @@ class Model(pl.LightningModule):
         for key in keys:
             res[key] = sync_ddp_if_available(res[key], reduce_op=ReduceOp.SUM)
             res[key] /= total
-            
+
         dict_total = {'total': total}
 
         return {**res, **dict_total}
