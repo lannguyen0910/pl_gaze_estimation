@@ -7,7 +7,7 @@ MODEL:
     REMOVE_PREFIX: null
     ADD_PREFIX: null
   RESNET_PREACT:
-    DEPTH: 8
+    DEPTH: 14
     INITIAL_CHANNELS: 16
     BLOCK_TYPE: basic
   LOSS:

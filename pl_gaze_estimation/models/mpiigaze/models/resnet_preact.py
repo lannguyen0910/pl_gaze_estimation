@@ -58,6 +58,7 @@ class Network(nn.Module):
             base_channels,
             base_channels * 2,
             base_channels * 4,
+            base_channels * 8
         ]
 
         self.conv = nn.Conv2d(input_shape[1],
@@ -82,7 +83,13 @@ class Network(nn.Module):
                                        n_blocks_per_stage,
                                        BasicBlock,
                                        stride=2)
-        self.bn = nn.BatchNorm2d(n_channels[2])
+
+        self.stage4 = self._make_stage(n_channels[2],
+                                       n_channels[3],
+                                       n_blocks_per_stage,
+                                       BasicBlock,
+                                       stride=2)
+        self.bn = nn.BatchNorm2d(n_channels[3])
 
         # compute conv feature size
         with torch.no_grad():
@@ -111,6 +118,7 @@ class Network(nn.Module):
         x = self.stage1(x)
         x = self.stage2(x)
         x = self.stage3(x)
+        x = self.stage4(x)
         x = F.relu(self.bn(x), inplace=True)
         x = F.adaptive_avg_pool2d(x, output_size=1)
         return x
