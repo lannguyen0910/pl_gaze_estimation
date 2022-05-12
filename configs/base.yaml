@@ -9,8 +9,8 @@ DEVICE:
     BENCHMARK: true
     DETERMINISTIC: false
 EXPERIMENT:
-  SEED: 0
-  ROOT_DIR : experiments
+  SEED: 2022
+  ROOT_DIR: experiments
   OUTPUT_DIR: null
   RESUME: null
   VAL_PERIOD: 1
@@ -35,10 +35,10 @@ LOG:
   PROGRESS_BAR_REFRESH_RATE: null
   SHOW_TRAIN_IN_PROGRESS_BAR: true
   LOG_ETA: true
-  LOG_PERIOD: 50
+  LOG_PERIOD: 500
   CHECKPOINT:
-    FILENAME: '{epoch:04d}'
-    PERIOD: 10
+    FILENAME: "{epoch:04d}"
+    PERIOD: 1
     TOP_K: -1
     SAVE_LAST: false
     VERBOSE: false
